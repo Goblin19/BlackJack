@@ -15,18 +15,12 @@ import creatingPeople.Dealer;
 import creatingPeople.Players;
 
 //Extends the JPanel Class (Find a different Purpose of this Class)
-public class MenuPanel extends JPanel implements ActionListener{
+public class MenuPanel extends JPanel{
 	
 	public MenuPanel(int menuPanelWidth, int menuPanelHeight) {
 		//setting the Panel
 		this.setPreferredSize(new Dimension(menuPanelWidth, menuPanelHeight));
-		this.setBackground(Color.gray);
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		this.setBackground(Color.blue);
 		
 	}
 

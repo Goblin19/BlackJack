@@ -11,12 +11,12 @@ import javax.swing.JPanel;
 //class Game panel extends JPanel
 public class GamePanel extends JPanel{
 	//initializing variables
-	private TextArea text;
+	public TextArea text;
 	
 	public GamePanel(int gamePanelWidth, int gamePanelHeight) {
 		
 		this.setPreferredSize(new Dimension(gamePanelWidth, gamePanelHeight));
-		this.setBackground(Color.black);
+		this.setBackground(Color.GREEN);
 		
 		//this.add(text);
 	}

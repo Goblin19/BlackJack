@@ -17,6 +17,8 @@ import creatingPeople.Players;
 //Class GameFrame extends JFrame
 public class GameFrame extends JFrame implements ActionListener{
 	private int count = 0;
+	private String[] responses = {"Hit me!", "Stand"};
+	private String Action;
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem keepGoing;
@@ -24,6 +26,7 @@ public class GameFrame extends JFrame implements ActionListener{
 	private JMenuItem addPlayers;
 	Dealer dealer = new Dealer("John", "Brown");
 	Players[] players = new Players[count+1];
+	GamePlayLoop playing = new GamePlayLoop();
 	
 	public GameFrame(int Width, int Height) {
 		
@@ -36,7 +39,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		//Menu setting
 		menuBar = new JMenuBar();
 				
-		menu = new JMenu("options");
+		menu = new JMenu("Gameplay");
 				
 		addPlayers = new JMenuItem("add Player?");
 		renameDealer = new JMenuItem("rename Dealer?");
@@ -58,7 +61,13 @@ public class GameFrame extends JFrame implements ActionListener{
 		
 		//checking which source has been used to be able to judge what to do
 		if(Source == keepGoing) {
-			
+			int actionChosen = JOptionPane.showOptionDialog(null, "Hit me or Stand", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, responses, null);
+			if(actionChosen == 0) {
+				Action = "hitme";
+			}else {
+				Action = "stand";
+			}
+			playing.currentTurn(players[0], dealer, Action);
 		}if(Source == renameDealer) {
 			String firstName = JOptionPane.showInputDialog("enter the Dealer's first name");
 			String lastName = JOptionPane.showInputDialog("enter the Dealer's last name");
@@ -77,7 +86,7 @@ public class GameFrame extends JFrame implements ActionListener{
 			players[count] = new Players(firstName, lastName);
 			
 			
-			//expand the array if neccisary
+			//expand the array if needed
 			if (count+1 == players.length) {
 				Players[] tempArray = new Players[players.length+1];
 				for (int i =0; i < players.length; i++) {
@@ -85,6 +94,7 @@ public class GameFrame extends JFrame implements ActionListener{
 				}
 				players = tempArray;
 			}
+			count++;
 		}
 		
 	}
