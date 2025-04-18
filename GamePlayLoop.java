@@ -12,6 +12,7 @@ public class GamePlayLoop {
 	final int randomMax = 11;
 	final int randomMin = 1;
 	
+	//Takes the current turn of the Player
 	public void currentTurn(Players object, Dealer object1, String Action) {
 		
 		switch(Action) {
@@ -37,12 +38,18 @@ public class GamePlayLoop {
 	}
 	
 	
+	
+	
+	// card handling
+	
+	//get the Number of the card
 	public int takeCard() {
 		Random rng = new Random();
 		int newCard = rng.nextInt(randomMin, randomMax);
 		return newCard;
 	}
 	
+	//Get the name of the card
 	public String getCard(int number) {
 		Random suit = new Random();
 		int suitCard = suit.nextInt(1,5);
@@ -78,7 +85,7 @@ public class GamePlayLoop {
 		}
 	}
 	
-	
+	//Gets the suit of the card
 	public String getSuit(int number) {
 		if(number == 1) {
 			return "hearts";
