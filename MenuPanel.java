@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -16,6 +17,8 @@ import creatingPeople.Players;
 
 //Extends the JPanel Class (Find a different Purpose of this Class)
 public class MenuPanel extends JPanel{
+	//initializing variable
+	JLabel dealerName;
 	
 	public MenuPanel(int menuPanelWidth, int menuPanelHeight) {
 		//setting the Panel

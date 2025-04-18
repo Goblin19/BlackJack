@@ -4,14 +4,18 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import Awards.winningScore;
 import creatingPeople.Dealer;
 import creatingPeople.Players;
 
 public class GamePlayLoop {
+	//initializing variables
+	public boolean busted = false;
 	final String[] responses = {"1", "11"};
 	final int bustNumber = 21;
 	final int randomMax = 11;
 	final int randomMin = 1;
+	winningScore winning = new winningScore();
 	
 	//Takes the current turn of the Player
 	public void currentTurn(Players object, Dealer object1, String Action) {
@@ -22,6 +26,7 @@ public class GamePlayLoop {
 			int newNumber = takeCard();
 			String card = getCard(newNumber);
 			if(newNumber == 1) {
+				//JOptionPane used
 				int option = JOptionPane.showOptionDialog(null, "You got an " + card + "! do you want 1 or 11?", "Aces!",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, responses, null);
 				if(option == 0) {
 					object.setCards(object.getCards() + newNumber);
@@ -34,7 +39,11 @@ public class GamePlayLoop {
 			}
 			System.out.println(object.getCards());
 			if(object.getCards() > bustNumber) {
+				busted = true;
 				System.out.println("You lose!");
+				int Scorechange = winning.Wonround(busted);
+				int ScoreNew = object.getScore() + Scorechange;
+				object.setScore(ScoreNew);
 			}if(object.getCards() == bustNumber) {
 				System.out.println("You win!");
 			}
@@ -42,6 +51,10 @@ public class GamePlayLoop {
 		case "stand":
 			if(object1.getCards() > object.getCards()) {
 				System.out.println("Sorry, I win this one.");
+				busted = true;
+				int Scorechange = winning.Wonround(busted);
+				int ScoreNew = object.getScore() + Scorechange;
+				object.setScore(ScoreNew);
 			}else {
 				System.out.println("You Win!");
 			}

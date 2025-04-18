@@ -6,7 +6,7 @@ public class Players extends Names {
 	
 	public String firstname;
 	public String lastname;
-	public int money = 0;
+	public int score = 0;
 	public int currentCards = 0;
 	
 	//Players Overloaded Constructor
@@ -15,14 +15,14 @@ public class Players extends Names {
 		
 	}
 	
-	//Setting the money for the people
-	public void setMoney(int money) {
-		this.money = money;
+	//Setting the score for the people
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
-	//Getting the money for the people
-	public int getMoney() {
-		return this.money;
+	//Getting the score for the people
+	public int getScore() {
+		return this.score;
 	}
 	
 	//card Number setter

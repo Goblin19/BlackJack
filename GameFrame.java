@@ -25,7 +25,7 @@ public class GameFrame extends JFrame implements ActionListener{
 	private JMenuItem renameDealer;
 	private JMenuItem addPlayers;
 	Dealer dealer = new Dealer("John", "Brown");
-	Players[] players = new Players[count+1];
+	Players players;
 	GamePlayLoop playing = new GamePlayLoop();
 	
 	public GameFrame(int Width, int Height) {
@@ -67,7 +67,7 @@ public class GameFrame extends JFrame implements ActionListener{
 			}else {
 				Action = "stand";
 			}
-			playing.currentTurn(players[0], dealer, Action);
+			playing.currentTurn(players, dealer, Action);
 		}if(Source == renameDealer) {
 			String firstName = JOptionPane.showInputDialog("enter the Dealer's first name");
 			String lastName = JOptionPane.showInputDialog("enter the Dealer's last name");
@@ -83,20 +83,8 @@ public class GameFrame extends JFrame implements ActionListener{
 			if(lastName.equals(null)) {
 				lastName = " ";
 			}
-			players[count] = new Players(firstName, lastName);
-			
-			
-			//expand the array if needed
-			if (count+1 == players.length) {
-				Players[] tempArray = new Players[players.length+1];
-				for (int i =0; i < players.length; i++) {
-					tempArray[i] = players[i];
-				}
-				players = tempArray;
-			}
-			count++;
+			players = new Players(firstName, lastName);
 		}
-		
 	}
 
 }
