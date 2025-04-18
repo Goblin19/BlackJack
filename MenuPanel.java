@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,16 +17,50 @@ import creatingPeople.Dealer;
 import creatingPeople.Players;
 
 //Extends the JPanel Class (Find a different Purpose of this Class)
-public class MenuPanel extends JPanel{
+public class MenuPanel extends JPanel implements ActionListener{
 	//initializing variable
+	Dealer dealer = new Dealer("Jhonny", " Bravo");
 	JLabel dealerName;
+	JButton changeDealerName;
 	
 	public MenuPanel(int menuPanelWidth, int menuPanelHeight) {
 		//setting the Panel
 		this.setPreferredSize(new Dimension(menuPanelWidth, menuPanelHeight));
 		this.setBackground(Color.blue);
 		
+		dealerName = new JLabel();
+		changeDealerName = new JButton("Change dealer name?");
+		dealerName.setText(dealer.firstName + dealer.lastName);
+		changeDealerName.setFocusable(false);
+		changeDealerName.addActionListener(this);
+		
+		this.add(dealerName);
+		this.add(changeDealerName);
+		
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if(source == changeDealerName) {
+			//Using JOption pane to get the player to reset the name
+			String firstName = JOptionPane.showInputDialog("enter the dealers first name");
+			String lastName = JOptionPane.showInputDialog("enter the dealers last name (leave blank if you don't want to add one)");
+			if(lastName.equals(null)) {
+				lastName = " ";
+			}
+			dealer.setFirstName(firstName);
+			dealer.setLastName(lastName);
+			if(lastName != " ") {
+				dealerName.setText(dealer.firstName + " " + dealer.lastName);
+			}else {
+				dealerName.setText(dealer.firstName);
+			}
+		}
+		
+	}
+	
+	
 
 
 }

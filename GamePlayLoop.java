@@ -18,8 +18,9 @@ public class GamePlayLoop {
 	winningScore winning = new winningScore();
 	
 	//Takes the current turn of the Player
-	public void currentTurn(Players object, Dealer object1, String Action) {
-		
+	public void currentTurn(Players object, Dealer object1, GamePanel object3, String Action) {
+		//reset busted
+		busted = false;
 		//Switch to check the Players Action
 		switch(Action) {
 		case "hitme":
@@ -57,10 +58,13 @@ public class GamePlayLoop {
 				object.setScore(ScoreNew);
 			}else {
 				System.out.println("You Win!");
+				int Scorechange = winning.Wonround(busted);
+				int ScoreNew = object.getScore() + Scorechange;
+				object.setScore(ScoreNew);
 			}
 			break;
 		}
-		
+		object3.score.setText(object.scoreToString());
 	}
 	
 	

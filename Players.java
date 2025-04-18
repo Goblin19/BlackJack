@@ -35,4 +35,10 @@ public class Players extends Names {
 		return this.currentCards;
 	}
 	
+	public String scoreToString() {
+		int score = getScore();
+		String currentScore = "Current Score: " + score;
+		return currentScore;
+	}
+	
 }

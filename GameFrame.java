@@ -16,16 +16,13 @@ import creatingPeople.Players;
 
 //Class GameFrame extends JFrame
 public class GameFrame extends JFrame implements ActionListener{
-	private int count = 0;
 	private String[] responses = {"Hit me!", "Stand"};
 	private String Action;
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem keepGoing;
-	private JMenuItem renameDealer;
-	private JMenuItem addPlayers;
-	Dealer dealer = new Dealer("John", "Brown");
-	Players players;
+	MenuPanel dealerPanel = new MenuPanel(500, 350);
+	GamePanel playerPanel = new GamePanel(500, 350);
 	GamePlayLoop playing = new GamePlayLoop();
 	
 	public GameFrame(int Width, int Height) {
@@ -41,17 +38,17 @@ public class GameFrame extends JFrame implements ActionListener{
 				
 		menu = new JMenu("Gameplay");
 				
-		addPlayers = new JMenuItem("add Player?");
-		renameDealer = new JMenuItem("rename Dealer?");
 		keepGoing = new JMenuItem("Take turn?");
-		addPlayers.addActionListener(this);
-		renameDealer.addActionListener(this);
 		keepGoing.addActionListener(this);
-		menu.add(addPlayers);
-		menu.add(renameDealer);
 		menu.add(keepGoing);
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
+		this.add(playerPanel, BorderLayout.SOUTH);
+		this.add(dealerPanel, BorderLayout.NORTH);
+
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);	
 	}
 	
 	@Override
@@ -67,24 +64,7 @@ public class GameFrame extends JFrame implements ActionListener{
 			}else {
 				Action = "stand";
 			}
-			playing.currentTurn(players, dealer, Action);
-		}if(Source == renameDealer) {
-			String firstName = JOptionPane.showInputDialog("enter the Dealer's first name");
-			String lastName = JOptionPane.showInputDialog("enter the Dealer's last name");
-			if(lastName.equals(null)) {
-				lastName = "";
-			}
-			dealer.setFirstName(firstName);
-			dealer.setLastName(lastName);
-		}if(Source == addPlayers) {
-			//Storing the player properly into the array
-			String firstName = JOptionPane.showInputDialog("enter your first name");
-			String lastName = JOptionPane.showInputDialog("enter your last name (leave blank if you don't want to add one)");
-			if(lastName.equals(null)) {
-				lastName = " ";
-			}
-			players = new Players(firstName, lastName);
+			playing.currentTurn(playerPanel.players, dealerPanel.dealer, playerPanel, Action);
 		}
 	}
-
 }
