@@ -22,7 +22,8 @@ import creatingPeople.Players;
 //class Game panel extends JPanel
 public class GamePanel extends JPanel implements ActionListener{
 	//initializing variables
-	Players players = new Players("Araragi", "");
+	Players players = new Players("Jasper", "");
+	//JSwing elements
 	JLabel playerName;
 	JLabel score;
 	JButton changingPlayerName;
@@ -54,7 +55,8 @@ public class GamePanel extends JPanel implements ActionListener{
 		this.add(score);
 		this.add(scrollPane);
 	}
-
+	
+	//Overridden Method
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
@@ -76,6 +78,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 	}
 	
+	//Throws Custom Exception and does not crash
 	public void changeColor(String S) throws ColorException {
 		S = S.toUpperCase();
 		if(S.equals("BLUE")) {

@@ -15,6 +15,12 @@ public class Players extends Names {
 		
 	}
 	
+	//Overloaded constructor
+	public Players(String firstname) {
+		super(firstname);
+	}
+	
+	
 	//Setting the score for the people
 	public void setScore(int score) {
 		this.score = score;

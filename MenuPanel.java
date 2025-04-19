@@ -22,13 +22,15 @@ import creatingPeople.Players;
 //Extends the JPanel Class (Find a different Purpose of this Class)
 public class MenuPanel extends JPanel implements ActionListener{
 	//initializing variable
-	Dealer dealer = new Dealer("Jhonny", " Bravo");
+	Dealer dealer = new Dealer("Mark");
+	//JSwing Elements
 	JLabel dealerName;
 	JButton changeDealerName;
 	JScrollPane scrollPane;
 	JTextArea text;
 	Color color = Color.orange;
 	public String currentText = " ";
+	
 	
 	public MenuPanel(int menuPanelWidth, int menuPanelHeight) {
 		//setting the Panel
@@ -38,7 +40,7 @@ public class MenuPanel extends JPanel implements ActionListener{
 		text = new JTextArea(14, 97);
 		dealerName = new JLabel();
 		changeDealerName = new JButton("Change dealer name?");
-		dealerName.setText(dealer.firstName + dealer.lastName);
+		dealerName.setText(dealer.firstName + " " + dealer.lastName);
 		changeDealerName.setFocusable(false);
 		changeDealerName.addActionListener(this);
 		text.setBackground(Color.LIGHT_GRAY);
@@ -53,7 +55,8 @@ public class MenuPanel extends JPanel implements ActionListener{
 		this.add(changeDealerName);
 		this.add(scrollPane);
 	}
-
+	
+	//Overridden Method
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
