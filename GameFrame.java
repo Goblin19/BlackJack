@@ -20,7 +20,9 @@ public class GameFrame extends JFrame implements ActionListener{
 	private String Action;
 	private JMenuBar menuBar;
 	private JMenu menu;
+	private JMenuItem colorChange;
 	private JMenuItem keepGoing;
+	private String resetText = "";
 	MenuPanel dealerPanel = new MenuPanel(500, 350);
 	GamePanel playerPanel = new GamePanel(500, 350);
 	GamePlayLoop playing = new GamePlayLoop();
@@ -31,15 +33,18 @@ public class GameFrame extends JFrame implements ActionListener{
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setTitle("Testing");
+		this.setTitle("Blackjack");
 		
 		//Menu setting
 		menuBar = new JMenuBar();
 				
 		menu = new JMenu("Gameplay");
 				
+		colorChange = new JMenuItem("Change player color?");
 		keepGoing = new JMenuItem("Take turn?");
+		colorChange.addActionListener(this);
 		keepGoing.addActionListener(this);
+		menu.add(colorChange);
 		menu.add(keepGoing);
 		menuBar.add(menu);
 		this.setJMenuBar(menuBar);
@@ -64,7 +69,44 @@ public class GameFrame extends JFrame implements ActionListener{
 			}else {
 				Action = "stand";
 			}
-			playing.currentTurn(playerPanel.players, dealerPanel.dealer, playerPanel, Action);
+			int gameWon = playing.currentTurn(playerPanel.players, dealerPanel.dealer, playerPanel, dealerPanel, Action);
+			if (gameWon == 1) {
+				playerPanel.text.setText("Final Score: " + playerPanel.players.scoreToString());
+				int keepGoing = JOptionPane.showOptionDialog(null, "Do you want to play again?", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+				if(keepGoing == 1) {
+					this.dispose();
+				}else{
+					playerPanel.text.setText(resetText);
+					dealerPanel.text.setText(resetText);
+					playerPanel.players.setCards(0);
+					dealerPanel.dealer.setCards(0);
+					playerPanel.players.setScore(0);
+					playerPanel.currentText = " ";
+					dealerPanel.currentText = " ";
+				}
+			}if(gameWon == 2) {
+				playerPanel.text.setText("Current Score: " + playerPanel.players.scoreToString());
+				int keepGoing = JOptionPane.showOptionDialog(null, "Do you want to keep playing?", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+				if(keepGoing == 1) {
+					this.dispose();
+				}else{
+					playerPanel.text.setText(resetText);
+					dealerPanel.text.setText(resetText);
+					playerPanel.players.setCards(0);
+					dealerPanel.dealer.setCards(0);
+					playerPanel.currentText = " ";
+					dealerPanel.currentText = " ";
+				}
+			}
+		}
+		
+		if(Source == colorChange) {
+			String color = JOptionPane.showInputDialog("What color do you want to change the color to?");
+			try {
+				playerPanel.changeColor(color);
+			} catch (ColorException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 }

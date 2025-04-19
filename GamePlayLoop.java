@@ -1,10 +1,13 @@
 package codingFinalAlt;
 
+import java.util.EmptyStackException;
 import java.util.Random;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
 import Awards.winningScore;
+import cards.DeckSetup;
 import creatingPeople.Dealer;
 import creatingPeople.Players;
 
@@ -16,16 +19,21 @@ public class GamePlayLoop {
 	final int randomMax = 11;
 	final int randomMin = 1;
 	winningScore winning = new winningScore();
+	DeckSetup setup = new DeckSetup();
+	Stack<Integer> Deck =  setup.Shuffle();
 	
 	//Takes the current turn of the Player
-	public void currentTurn(Players object, Dealer object1, GamePanel object3, String Action) {
+	public int currentTurn(Players object, Dealer object1, GamePanel object3, MenuPanel object4, String Action) {
 		//reset busted
 		busted = false;
 		//Switch to check the Players Action
 		switch(Action) {
 		case "hitme":
-			int newNumber = takeCard();
+			int newNumber = takeCard(Deck);
+			int dealerNumber = takeCard(Deck);
 			String card = getCard(newNumber);
+			String dealerCard = getCard(dealerNumber);
+			object1.setCards(object1.getCards() + dealerNumber);
 			if(newNumber == 1) {
 				//JOptionPane used
 				int option = JOptionPane.showOptionDialog(null, "You got an " + card + "! do you want 1 or 11?", "Aces!",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, responses, null);
@@ -38,33 +46,48 @@ public class GamePlayLoop {
 			}else {
 				object.setCards(object.getCards() + newNumber);
 			}
-			System.out.println(object.getCards());
+			
+			if(object4.currentText.equals(" ")) {
+				object4.currentText = dealerCard + "\n" + "current cards number: " + object1.getCards();	
+				object4.text.setText(object4.currentText);
+			}else {
+				object4.currentText = object4.currentText + "\n" + dealerCard+ "\n" + "current cards number: " + object1.getCards();
+				object4.text.setText(object4.currentText);
+			}
+			if(object3.currentText.equals(" ")) {
+				object3.currentText = card + "\n" + "current cards number: " + object.getCards();
+				object3.text.setText(object3.currentText);
+			}else {
+				object3.currentText = object3.currentText + "\n" + card+ "\n" + "current cards number: " + object.getCards();
+				object3.text.setText(object3.currentText);
+			}
+			
+			
+			//checking at the end of the game
 			if(object.getCards() > bustNumber) {
 				busted = true;
-				System.out.println("You lose!");
-				int Scorechange = winning.Wonround(busted);
-				int ScoreNew = object.getScore() + Scorechange;
-				object.setScore(ScoreNew);
+				object4.text.setText("You buseted sorry.");
+				return 1;
 			}if(object.getCards() == bustNumber) {
-				System.out.println("You win!");
+				object4.text.setText("You Win!");
+				return 2;
 			}
 			break;
 		case "stand":
 			if(object1.getCards() > object.getCards()) {
-				System.out.println("Sorry, I win this one.");
+				object4.text.setText("Sorry, I win this one.");
 				busted = true;
-				int Scorechange = winning.Wonround(busted);
-				int ScoreNew = object.getScore() + Scorechange;
-				object.setScore(ScoreNew);
+				return 1;
 			}else {
-				System.out.println("You Win!");
+				object4.text.setText("You Win!");
 				int Scorechange = winning.Wonround(busted);
 				int ScoreNew = object.getScore() + Scorechange;
 				object.setScore(ScoreNew);
+				return 2;
 			}
-			break;
 		}
 		object3.score.setText(object.scoreToString());
+		return 0;
 	}
 	
 	
@@ -73,10 +96,19 @@ public class GamePlayLoop {
 	// card handling
 	
 	//get the Number of the card
-	public int takeCard() {
-		Random rng = new Random();
-		int newCard = rng.nextInt(randomMin, randomMax);
-		return newCard;
+	public int takeCard(Stack<Integer> S) {
+		try {
+			int poppedNumber = S.pop();
+			return poppedNumber;
+		}catch(EmptyStackException e) {
+			Shuffle();
+			int poppedNumber = Deck.pop();
+			return poppedNumber;
+		}
+	}
+	
+	public void Shuffle(){
+		this.Deck = setup.Shuffle();
 	}
 	
 	//Get the name of the card

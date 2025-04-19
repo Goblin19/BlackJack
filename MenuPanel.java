@@ -2,6 +2,7 @@ package codingFinalAlt;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,6 +13,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import creatingPeople.Dealer;
 import creatingPeople.Players;
@@ -22,21 +25,33 @@ public class MenuPanel extends JPanel implements ActionListener{
 	Dealer dealer = new Dealer("Jhonny", " Bravo");
 	JLabel dealerName;
 	JButton changeDealerName;
+	JScrollPane scrollPane;
+	JTextArea text;
+	Color color = Color.orange;
+	public String currentText = " ";
 	
 	public MenuPanel(int menuPanelWidth, int menuPanelHeight) {
 		//setting the Panel
 		this.setPreferredSize(new Dimension(menuPanelWidth, menuPanelHeight));
-		this.setBackground(Color.blue);
+		this.setBackground(color);
 		
+		text = new JTextArea(14, 97);
 		dealerName = new JLabel();
 		changeDealerName = new JButton("Change dealer name?");
 		dealerName.setText(dealer.firstName + dealer.lastName);
 		changeDealerName.setFocusable(false);
 		changeDealerName.addActionListener(this);
+		text.setBackground(Color.LIGHT_GRAY);
+		text.setFont(new Font("Lexend", Font.PLAIN, 13));
+		text.setForeground(color.BLUE);
+		text.setEditable(false);
+		scrollPane = new JScrollPane(text);
+		scrollPane.setBounds(1, 1, 498, 349);
+		
 		
 		this.add(dealerName);
 		this.add(changeDealerName);
-		
+		this.add(scrollPane);
 	}
 
 	@Override
@@ -59,8 +74,5 @@ public class MenuPanel extends JPanel implements ActionListener{
 		}
 		
 	}
-	
-	
-
 
 }
