@@ -1,5 +1,5 @@
 package creatingPeople;
-
+//Parent Class!
 public class Names {
 	
 	public String firstName;
@@ -10,6 +10,12 @@ public class Names {
 		this.firstName = firstname;
 		this.lastName = lastname;
 			
+	}
+	
+	//Overloaded constructor
+	public Names(String firstname) {
+		this.firstName = firstname;
+		this.lastName = "";
 	}
 		
 	//Names setters

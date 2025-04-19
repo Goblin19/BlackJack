@@ -1,10 +1,11 @@
 package codingFinalAlt;
 
+import java.awt.BorderLayout;
+
 public class GameSetup {
 
-	public static void main(String[] args) {
-		GamePanel panel = new GamePanel(700, 500);
-		
+	public void GameRun() {
+		GameFrame frame = new GameFrame(1000, 700);
 		
 	}
 

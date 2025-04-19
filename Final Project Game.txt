@@ -1,0 +1,18 @@
+How the game works:
+The game is a simple game of blackjack. The dealer will draw a card when the player opts to take their turn. Then the user will be prompted to take their card. Throughout the game you will be able to see both the dealers cards and total number and your own. When it hits the third round the dealer will pick a card or stay if they are over 17. They will then prompt the user to pick a new card or stay as well. Afterwards the cards are counted and if the dealer went above 21 the player wins. If the player goes above 21 they lose. If the player gets exactly 21 they win! If the player ties with the dealer, the dealer wins.
+Each round will count up score and you will be given an amount of money each time you win.
+Whenever the player loses they will have their final score printed to a file with their name.
+Just try to get the best score you can!
+
+To play the game:
+Change the name of you player by clicking the "Change name" button.
+Change the name of the dealer by clicking the "Change dealer name" button.
+Start the game by going to the menu in the top left and clicking "Take turn?".
+When the game starts the dealer will draw a card and a JOptionPane will prompt you to draw one as well.
+This repeats for another round, then the dealer will draw another if below 17, and prompt you to either draw a card or stand.
+If you beat the dealer you get 1000 points.
+If you bust you will lose, and all progress will be reset.
+Good luck!
+
+Note:
+You can change the player color by pressing the "Change player color?" button.
