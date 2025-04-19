@@ -6,14 +6,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
-//Class for sound
+//Class for Audio
 public class Audio {
 	//Audio
 	Clip clip;
 	URL soundURL[] = new URL[1];
 
 		public Audio() {
-			soundURL[0] = getClass().getResource("GameShowBackground.wav");
+			soundURL[0] = getClass().getResource("BackgroundMusic.wav");
 			
 		}
 		
