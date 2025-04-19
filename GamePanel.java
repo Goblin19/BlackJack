@@ -30,7 +30,6 @@ public class GamePanel extends JPanel implements ActionListener{
 	JTextArea text;
 	Color color = Color.GREEN;
 	public String currentText = " ";
-	public String textAdded = "";
 	
 	public GamePanel(int gamePanelWidth, int gamePanelHeight) {
 		

@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,21 +14,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import Awards.ImageAward;
 import creatingPeople.Dealer;
 import creatingPeople.Players;
 
 //Class GameFrame extends JFrame
 public class GameFrame extends JFrame implements ActionListener{
-	private String[] responses = {"Hit me!", "Stand"};
-	private String Action;
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem colorChange;
 	private JMenuItem keepGoing;
 	private String resetText = "";
+	boolean lastRound;
+	int count = 0;
+	BufferedWriter writer;
 	MenuPanel dealerPanel = new MenuPanel(500, 350);
 	GamePanel playerPanel = new GamePanel(500, 350);
 	GamePlayLoop playing = new GamePlayLoop();
+	ImageAward award = new ImageAward();
 	
 	public GameFrame(int Width, int Height) {
 		
@@ -63,17 +69,16 @@ public class GameFrame extends JFrame implements ActionListener{
 		
 		//checking which source has been used to be able to judge what to do
 		if(Source == keepGoing) {
-			int actionChosen = JOptionPane.showOptionDialog(null, "Hit me or Stand", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, responses, null);
-			if(actionChosen == 0) {
-				Action = "hitme";
-			}else {
-				Action = "stand";
+			if(count == 2) {
+				lastRound = true;
 			}
-			int gameWon = playing.currentTurn(playerPanel.players, dealerPanel.dealer, playerPanel, dealerPanel, Action);
+			int gameWon = playing.currentTurn(playerPanel.players, dealerPanel.dealer, playerPanel, dealerPanel, lastRound);
+			count++;
 			if (gameWon == 1) {
 				playerPanel.text.setText("Final Score: " + playerPanel.players.scoreToString());
 				int keepGoing = JOptionPane.showOptionDialog(null, "Do you want to play again?", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 				if(keepGoing == 1) {
+					fileWriter(playerPanel.players);
 					this.dispose();
 				}else{
 					playerPanel.text.setText(resetText);
@@ -81,13 +86,17 @@ public class GameFrame extends JFrame implements ActionListener{
 					playerPanel.players.setCards(0);
 					dealerPanel.dealer.setCards(0);
 					playerPanel.players.setScore(0);
+					playerPanel.score.setText(playerPanel.players.scoreToString());
 					playerPanel.currentText = " ";
 					dealerPanel.currentText = " ";
+					count = 0;
+					lastRound = false;
 				}
 			}if(gameWon == 2) {
-				playerPanel.text.setText("Current Score: " + playerPanel.players.scoreToString());
+				playerPanel.text.setText(playerPanel.players.scoreToString());
 				int keepGoing = JOptionPane.showOptionDialog(null, "Do you want to keep playing?", "Taking Turn", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 				if(keepGoing == 1) {
+					fileWriter(playerPanel.players);
 					this.dispose();
 				}else{
 					playerPanel.text.setText(resetText);
@@ -96,6 +105,8 @@ public class GameFrame extends JFrame implements ActionListener{
 					dealerPanel.dealer.setCards(0);
 					playerPanel.currentText = " ";
 					dealerPanel.currentText = " ";
+					count = 0;
+					lastRound = false;
 				}
 			}
 		}
@@ -108,5 +119,21 @@ public class GameFrame extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
 		}
+	}
+	
+	
+	public void fileWriter(Players object) {
+		try {
+			writer = new BufferedWriter(new FileWriter("FinalScore.txt"));
+			if (object.lastName.equals("")) {
+				writer.write("Final Score for " + object.firstName +  ": " + object.score);
+			}else {
+				writer.write("Final Score for " + object.firstName + " " + object.lastName + ": " + object.score);
+			}
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
